@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
 {
     public List<PlayerController> players;
 
+    public GameObject playerPrefab;
+    public Transform playerSpawn;
+
     public static GameManager gameManager;
     //Initalize Singleton
     public void Awake()
@@ -21,6 +24,8 @@ public class GameManager : MonoBehaviour
         {
             DontDestroyOnLoad(gameManager);
         }
+
+        Instantiate(playerPrefab, playerSpawn);
     }
 
     // Start is called before the first frame update

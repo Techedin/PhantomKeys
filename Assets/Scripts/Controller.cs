@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Controller : MonoBehaviour
 {
-
+    public Rigidbody2D rb;
     // Start is called before the first frame update
     public virtual void Start()
     {

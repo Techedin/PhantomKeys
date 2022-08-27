@@ -5,11 +5,10 @@ using UnityEngine;
 public class PlayerController : Controller
 {
     public KeyCode interactKey;
-
     public float moveSpeed;
     public Vector2 moveDirection;
 
-    public Rigidbody2D rb;
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -24,10 +23,8 @@ public class PlayerController : Controller
 
             }
 
-
+            DontDestroyOnLoad(this);
         }
-
-        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
