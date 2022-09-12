@@ -25,7 +25,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            DontDestroyOnLoad(dialogueManager);
+            Destroy(gameObject);
         }
     }
 
@@ -33,6 +33,7 @@ public class DialogueManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         //Create a Queue for my sentences
         sentences = new Queue<string>();
     }
@@ -40,6 +41,7 @@ public class DialogueManager : MonoBehaviour
     //This is called in out DialogueTigger script or its children
     public void StartDialogue(Dialogue dialogue)
     {
+        GameManager.gameManager.activePlayer.GetComponentInChildren<Text>();
         animator.SetBool("isOpen", true);
         nameText.text = dialogue.name;
 

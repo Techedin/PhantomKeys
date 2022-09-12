@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public List<PlayerController> players;
 
     public GameObject playerPrefab;
+    public GameObject activePlayer;
     public Transform playerSpawn;
 
     public static GameManager gameManager;
@@ -22,16 +22,15 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            DontDestroyOnLoad(gameManager);
+            Destroy(gameObject);
         }
 
-        Instantiate(playerPrefab, playerSpawn);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
+        SpawnPlayer();
     }
 
     // Update is called once per frame
@@ -39,4 +38,12 @@ public class GameManager : MonoBehaviour
     {
 
     }
+
+    public void SpawnPlayer()
+    {
+        Debug.Log("hit");
+        activePlayer = Instantiate(playerPrefab, playerSpawn);
+
+    }
+
 }

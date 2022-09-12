@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : Controller
 {
+    public static PlayerController playerController;
+
     public KeyCode interactKey;
     public float moveSpeed;
     public Vector2 moveDirection;
@@ -12,19 +14,16 @@ public class PlayerController : Controller
     // Start is called before the first frame update
     public override void Start()
     {
-        //Adds Player Controller to GameManager for referencing purposes
-        if (GameManager.gameManager != null)
+        if (playerController == null)
         {
-            //Check to see if this is in the list
-            if (GameManager.gameManager.players != null)
-            {
-                //add to active players list
-                GameManager.gameManager.players.Add(this);
-
-            }
-
-            DontDestroyOnLoad(this);
+            playerController = this;
+            DontDestroyOnLoad(playerController);
         }
+        else
+        {
+            Destroy(gameObject);
+        }
+
     }
 
     // Update is called once per frame
@@ -52,7 +51,15 @@ public class PlayerController : Controller
     {
         //The rigidbody attach has interpolate on so the movement isn't choppy
         //Allows for free movement in 8 directions
-        rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
+        if (rb != null)
+        {
+            rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
+        }
+        else
+        {
+            Debug.Log("Not RB Found");
+        }
+
     }
 
 }
