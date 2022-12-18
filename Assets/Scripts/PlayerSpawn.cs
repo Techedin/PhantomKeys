@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class PlayerSpawn : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        GameManager.gameManager.playerSpawn = this.transform;
-    }
+    [SerializeField] private Vector3 startPos;
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-
+        GameManager.gameManager.activePlayer.transform.position = startPos;
     }
 }

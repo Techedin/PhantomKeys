@@ -8,7 +8,7 @@ public class Loader : MonoBehaviour
 
     // Type in the name of the Scene you would like to load in the Inspector
     public string m_Scene;
-
+    public Scene sceneToLoad;
     // Assign your GameObject you want to move Scene in the Inspector
     public GameObject m_MyGameObject;
 
@@ -26,7 +26,9 @@ public class Loader : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
+
 
     // Update is called once per frame
     void Update()
@@ -34,49 +36,42 @@ public class Loader : MonoBehaviour
 
     }
 
-    /// 
-
-    //public void LoadBattleSceneRuins()
-    //{
 
 
-    //    m_MyGameObject = GameManager.gameManager.activePlayer;
-    //    m_Scene = "SampleBattleScene";
-    //    StartCoroutine(LoadYourAsyncScene());
-
-
-    //}
+    public void LoadBattleSceneRuins()
+    {
+        m_MyGameObject = GameManager.gameManager.activePlayer;
+        StartCoroutine(LoadYourAsyncScene("SampleBattleScene"));
+    }
 
     public void LoadOverworldRuins()
     {
-
         m_MyGameObject = GameManager.gameManager.activePlayer;
-        m_Scene = "SampleScene";
-        StartCoroutine(LoadYourAsyncScene());
-
+        StartCoroutine(LoadYourAsyncScene("SampleScene"));
+        //StartCoroutine(LoadYourAsyncScene(SceneManager.GetSceneByName("SampleScene")));
     }
 
 
-    IEnumerator LoadYourAsyncScene()
+    public IEnumerator LoadYourAsyncScene(string sceneName)
     {
-        // Set the current Scene to be able to unload it later
-        Scene currentScene = SceneManager.GetActiveScene();
+        // The Application loads the Scene in the background as the current Scene runs.
+        // This is particularly good for creating loading screens.
+        // You could also load the Scene by using sceneBuildIndex, but I'm going to stick with string for right now
 
-        // The Application loads the Scene in the background at the same time as the current Scene.
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(m_Scene, LoadSceneMode.Additive);
+        Scene sceneToUnload = SceneManager.GetActiveScene();
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
-        // Wait until the last operation fully loads to return anything
+        // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
         {
-
+            //Whatever needs to be done before scene loads
+            GameManager.gameManager.SpawnPlayer();
             yield return null;
         }
+        //everything after scene loads
 
-        // Move the GameObject (you attach this in the Inspector) to the newly loaded Scene
-        SceneManager.MoveGameObjectToScene(GameManager.gameManager.activePlayer, SceneManager.GetSceneByName(m_Scene));
-        GameManager.gameManager.activePlayer.transform.position = GameManager.gameManager.playerSpawn.transform.position;
-        // Unload the previous Scene
-        SceneManager.UnloadSceneAsync(currentScene);
+
     }
+
 
 }

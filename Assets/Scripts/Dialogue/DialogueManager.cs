@@ -15,6 +15,8 @@ public class DialogueManager : MonoBehaviour
 
     public Animator animator;
     public float typingSpeed;
+
+    public Text killCounter;
     //Singleton
     public void Awake()
     {
@@ -66,18 +68,23 @@ public class DialogueManager : MonoBehaviour
         }
         //Display next sentence in queue
         string sentence = sentences.Dequeue();
-        //Start Coroutines and Stop any active ones(allow for skipping of animating text)
+        //Start Coroutines and Stop any active ones(allows for skipping of animating text)
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
     }
 
     // Allow for text to appear on at a time
+    //IEnumerator is the basic way to indicate a coroutine
+    //All coroutines require a return
+    //yield is basically the pause button
+    //yeild return new means that the coroutine will be continued after whatever is called
+    //yeild return null stops the coroutine until coroutine is called again.
     IEnumerator TypeSentence(string sentence)
     {
         //make the text empty
         dialogueText.text = "";
 
-        //add a character every typingSpeed(seconds) to gicve the look of animating text
+        //add a character every typingSpeed(seconds) to give the look of animating text(Gonna add options for text speed eventually)
         foreach (char letter in sentence.ToCharArray())
         {
             dialogueText.text += letter;

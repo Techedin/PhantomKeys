@@ -5,20 +5,14 @@ using UnityEngine;
 public abstract class Controller : MonoBehaviour
 {
     public Rigidbody2D rb;
-    // Start is called before the first frame update
-    public virtual void Start()
-    {
 
-    }
 
-    // Update is called once per frame
-    public virtual void Update()
-    {
+    protected float _health;
+    protected int _maxHealth;
+    public float health { get; set; }
+    public int maxHealth { get; set; }
 
-    }
+    public abstract void ProcessInputs();
+    public abstract void Die();
 
-    public virtual void ProcessInputs()
-    {
-
-    }
 }
